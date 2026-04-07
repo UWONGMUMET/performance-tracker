@@ -1,20 +1,17 @@
 from pydantic import BaseModel, EmailStr, Field
 
-class UserRegister(BaseModel):
+class UserCreate(BaseModel):
     email: EmailStr
     password: str = Field(min_length=6)
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class TokenResponse(BaseModel):
-    access_token: str
-    token_type: str
+class UserUpdate(BaseModel):
+    email: EmailStr | None = None
+    password: str | None = Field(default=None, min_length=6)
 
 class UserResponse(BaseModel):
     id: str
     email: EmailStr
+    is_active: bool
 
     class Config:
         from_attributes = True
