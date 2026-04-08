@@ -3,16 +3,16 @@ from models.user import User
 from core.security import hash_password
 from fastapi import HTTPException
 
-def get_users(db: Session):
+def get_users(db: Session, user):
     return db.query(User).all()
 
-def get_user_by_id(db: Session, user_id: str):
+def get_user_by_id(db: Session, user_id: str, user):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-def update_user(db: Session, user_id: str, data):
+def update_user(db: Session, user_id: str, user, data):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -26,7 +26,7 @@ def update_user(db: Session, user_id: str, data):
     db.refresh(user)
     return user
 
-def delete_user(db: Session, user_id: str):
+def delete_user(db: Session, user_id: str, user):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
