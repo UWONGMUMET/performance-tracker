@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, DateTime
+from datetime import datetime
 import uuid
 from db.base import Base
 
@@ -10,3 +11,4 @@ class User(Base):
     password = Column(String, nullable=False)
 
     is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.now())
